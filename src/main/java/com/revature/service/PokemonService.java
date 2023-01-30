@@ -45,8 +45,6 @@ public class PokemonService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        // repo.Save(pokeJson);
     }
 
     public void findPokemon()
