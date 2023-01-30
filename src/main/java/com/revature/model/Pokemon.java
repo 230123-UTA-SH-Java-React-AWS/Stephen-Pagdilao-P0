@@ -1,5 +1,6 @@
 package com.revature.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -20,6 +21,10 @@ public class Pokemon {
 
     //What data structure allows us to add multiple things
     private List<Ability> abilities;
+
+    public Pokemon() {
+        this.abilities = new ArrayList<>();
+    }
 
     
     //right click, click source action, click generate getters and setters, select all fields, hit ok
