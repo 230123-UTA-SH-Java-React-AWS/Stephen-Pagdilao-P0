@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.service.PokemonService;
 import com.sun.net.httpserver.HttpExchange;
@@ -30,7 +32,14 @@ public class PokemonController implements HttpHandler {
             default:
                 break;
         }
+
+        System.out.println();
     }
+
+    /*
+        Javelin
+        HttpClient - library
+    */
 
     private void postRequest(HttpExchange exchange) throws IOException {
         
