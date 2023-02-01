@@ -5,6 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.model.Pokemon;
 import com.revature.utils.ConnectionUtil;
@@ -52,9 +56,9 @@ public class PokemonRepository {
         // }
         
 
-        //NEW WAY TO SAVE TO DATABASE INSTEAD
+        //NEW WAY TO SAVE TO DATABASE INSTEAD 
         String sql = "insert into pokemon (pokename, pokelevel, health, damage, speed) values (?, ?, ?, ?, ?)";
-
+        //JDBC API
         try (Connection con = ConnectionUtil.getConnection()) {
 
             PreparedStatement prstmt = con.prepareStatement(sql);
@@ -70,10 +74,45 @@ public class PokemonRepository {
             //execute() method does not expect to return anything from the statement
             //executeQuery() method does expect something to result after executing the statement
             prstmt.execute();
+            
 
         } catch (Exception e) {
             //TODO: handle exception
             e.printStackTrace();
         }
+
     }
+
+    public List<Pokemon> getAllPokemon() {
+        String sql = "select * from pokemon";
+        List<Pokemon> listOfPokemon = new ArrayList<Pokemon>();
+
+        try (Connection con = ConnectionUtil.getConnection()) {
+
+            Statement stmt = con.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            //Mapping information from a table to a DS instead
+            while (rs.next()) {
+                Pokemon newPokemon = new Pokemon();
+
+                newPokemon.setPokeId(rs.getInt(6));
+                newPokemon.setName(rs.getString(1));
+                newPokemon.setLevel(rs.getInt(2));
+                newPokemon.setHealth(rs.getInt(3));
+                newPokemon.setDamage(rs.getInt(4));
+                newPokemon.setSpeed(rs.getInt(5));
+
+                listOfPokemon.add(newPokemon);
+            }
+
+        } catch (Exception e) {
+            //TODO: handle exception
+            e.printStackTrace();
+        }
+
+        return listOfPokemon;
+    }
+
 }

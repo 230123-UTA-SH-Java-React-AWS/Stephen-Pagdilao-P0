@@ -27,6 +27,17 @@ public class Pokemon {
     }
 
     
+
+    
+    @Override
+    public String toString() {
+        return "Pokemon [abilities=" + abilities + ", damage=" + damage + ", health=" + health + ", level=" + level
+                + ", name=" + name + ", pokeId=" + pokeId + ", speed=" + speed + "]";
+    }
+
+
+
+
     //right click, click source action, click generate getters and setters, select all fields, hit ok
     public int getPokeId() {
         return pokeId;

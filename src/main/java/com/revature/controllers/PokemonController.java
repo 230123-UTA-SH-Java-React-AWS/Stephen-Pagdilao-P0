@@ -6,11 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.lang.instrument.Instrumentation;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.model.Pokemon;
 import com.revature.service.PokemonService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -25,6 +27,9 @@ public class PokemonController implements HttpHandler {
         //PUT - 3, updating 
         //POST - infinite, create a new resource
         switch (verb) {
+            case "GET":
+                getRequest(exchange);
+                break;
             case "POST":
                 postRequest(exchange);
                 break;
@@ -34,6 +39,17 @@ public class PokemonController implements HttpHandler {
         }
 
         System.out.println();
+    }
+
+    private void getRequest(HttpExchange exchange) throws IOException {
+        PokemonService serv = new PokemonService();
+        String jsonCurrentList = serv.getAllPokemon();
+
+        exchange.sendResponseHeaders(200, jsonCurrentList.getBytes().length);
+
+        OutputStream os = exchange.getResponseBody();
+        os.write(jsonCurrentList.getBytes());
+        os.close();
     }
 
     /*
