@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.revature.model.Pokemon;
+import com.revature.repository.AbilityRepository;
 import com.revature.repository.PokemonRepository;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -17,6 +18,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 */
 public class PokemonService {
 
+    private final PokemonRepository pokerepo = new PokemonRepository();
+    private final ObjectMapper mapper = new ObjectMapper();
+
     public void battle()
     {
 
@@ -28,13 +32,11 @@ public class PokemonService {
 
     public void saveToPokeBox(String pokeJson)
     {
-        PokemonRepository repo = new PokemonRepository();
         //Conversion from string to pokemon obj here?
-        ObjectMapper mapper = new ObjectMapper();
 
         try {
             Pokemon newPokemon = mapper.readValue(pokeJson, Pokemon.class);
-            repo.Save(newPokemon);
+            pokerepo.Save(newPokemon);
 
         } catch (JsonParseException e) {
             // TODO Auto-generated catch block
@@ -51,15 +53,11 @@ public class PokemonService {
     //Converting List into 
     public String getAllPokemon()
     {
-        PokemonRepository repo = new PokemonRepository();
-        List<Pokemon> listOfPoke = repo.getAllPokemon();
-
-        ObjectMapper map = new ObjectMapper();
-
+        List<Pokemon> listOfPoke = pokerepo.getAllPokemon();
         String jsonString = "";
 
         try {
-            jsonString = map.writeValueAsString(listOfPoke);
+            jsonString = mapper.writeValueAsString(listOfPoke);
 
         } catch (JsonGenerationException e) {
             // TODO Auto-generated catch block

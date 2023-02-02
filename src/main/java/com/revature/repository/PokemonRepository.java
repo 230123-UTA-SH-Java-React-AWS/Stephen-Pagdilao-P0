@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.model.Ability;
 import com.revature.model.Pokemon;
 import com.revature.utils.ConnectionUtil;
 
@@ -76,7 +77,8 @@ public class PokemonRepository {
             prstmt.execute();
             
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             //TODO: handle exception
             e.printStackTrace();
         }
@@ -103,6 +105,7 @@ public class PokemonRepository {
                 newPokemon.setHealth(rs.getInt(3));
                 newPokemon.setDamage(rs.getInt(4));
                 newPokemon.setSpeed(rs.getInt(5));
+                newPokemon.setAbilities(getAbilityByPokeId(newPokemon.getPokeId()));
 
                 listOfPokemon.add(newPokemon);
             }
@@ -113,6 +116,12 @@ public class PokemonRepository {
         }
 
         return listOfPokemon;
+    }
+
+    private List<Ability> getAbilityByPokeId(int pokeid)
+    {
+        //Implementation details
+        return new ArrayList<>();
     }
 
 }

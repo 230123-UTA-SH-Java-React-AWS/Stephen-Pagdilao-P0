@@ -19,6 +19,8 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class PokemonController implements HttpHandler {
 
+    private final PokemonService pokeServ = new PokemonService();
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         // TODO Auto-generated method stub
@@ -42,8 +44,7 @@ public class PokemonController implements HttpHandler {
     }
 
     private void getRequest(HttpExchange exchange) throws IOException {
-        PokemonService serv = new PokemonService();
-        String jsonCurrentList = serv.getAllPokemon();
+        String jsonCurrentList = pokeServ.getAllPokemon();
 
         exchange.sendResponseHeaders(200, jsonCurrentList.getBytes().length);
 
@@ -82,8 +83,7 @@ public class PokemonController implements HttpHandler {
         exchange.sendResponseHeaders(200, textBuilder.toString().getBytes().length);
 
         //Don't forget to call on the service layer and execute the method
-        PokemonService pokeService = new PokemonService();
-        pokeService.saveToPokeBox(textBuilder.toString());
+        pokeServ.saveToPokeBox(textBuilder.toString());
 
         OutputStream os = exchange.getResponseBody();
         os.write(textBuilder.toString().getBytes());
