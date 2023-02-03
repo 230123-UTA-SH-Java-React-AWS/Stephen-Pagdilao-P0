@@ -13,13 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.model.Pokemon;
+import com.revature.repository.PokemonRepository;
 import com.revature.service.PokemonService;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class PokemonController implements HttpHandler {
 
-    private final PokemonService pokeServ = new PokemonService();
+    //Anyone who makes this object that has a dependency MUST provide its dependency during initialization
+    private final PokemonService pokeServ = new PokemonService(new PokemonRepository());
+
+    //DI pattern
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {

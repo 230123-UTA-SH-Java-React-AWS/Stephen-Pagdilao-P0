@@ -105,6 +105,7 @@ public class PokemonRepository {
                 newPokemon.setHealth(rs.getInt(3));
                 newPokemon.setDamage(rs.getInt(4));
                 newPokemon.setSpeed(rs.getInt(5));
+
                 newPokemon.setAbilities(getAbilityByPokeId(newPokemon.getPokeId()));
 
                 listOfPokemon.add(newPokemon);
@@ -121,6 +122,8 @@ public class PokemonRepository {
     private List<Ability> getAbilityByPokeId(int pokeid)
     {
         //Implementation details
+        //SQL statement that can grab all abilities for that specific pokemon
+        
         return new ArrayList<>();
     }
 

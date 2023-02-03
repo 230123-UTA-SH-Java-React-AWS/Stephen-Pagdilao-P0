@@ -18,8 +18,18 @@ import org.codehaus.jackson.map.ObjectMapper;
 */
 public class PokemonService {
 
-    private final PokemonRepository pokerepo = new PokemonRepository();
     private final ObjectMapper mapper = new ObjectMapper();
+    
+    //The whole point of DI pattern is to force the supplement of the dependencies
+    //=============== Dependency Injection =================
+    //Create a constructor and add in the parameter the class dependency
+    private final PokemonRepository pokerepo;
+
+    public PokemonService(PokemonRepository pokerepo) {
+        this.pokerepo = pokerepo;
+    }
+
+    //=======================================================
 
     public void battle()
     {
