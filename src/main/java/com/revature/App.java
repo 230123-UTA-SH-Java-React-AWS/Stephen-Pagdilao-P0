@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.revature.controllers.AbilityController;
 import com.revature.controllers.PokemonController;
 import com.revature.model.Pokemon;
 import com.revature.repository.PokemonRepository;
@@ -29,6 +30,7 @@ public final class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
         server.createContext("/pokemon", new PokemonController());
+        server.createContext("/ability", new AbilityController());
 
         server.setExecutor(null);
         server.start();

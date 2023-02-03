@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.lang.instrument.Instrumentation;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -32,6 +33,13 @@ public class PokemonController implements HttpHandler {
 
         //PUT - 3, updating 
         //POST - infinite, create a new resource
+
+        //URI uri = exchange.getRequestURI();
+        //Parse it
+        // "pokemon/login" => "login => http verb" && /pokemon/login/trainer => "login => trainer => each http verb"
+        //Use switch statement to direct to specific private methods
+        //use a nested switch statement that directs to a specific http verb
+
         switch (verb) {
             case "GET":
                 getRequest(exchange);
