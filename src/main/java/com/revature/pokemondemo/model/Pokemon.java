@@ -7,9 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -21,7 +21,7 @@ import lombok.Data;
 public @Data class Pokemon implements Validator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
     @Column(length = 50)
@@ -31,6 +31,7 @@ public @Data class Pokemon implements Validator {
     private int health;
 
     @ManyToOne()
+    @JsonBackReference
     private Trainer trainer;
 
     public Pokemon() { }

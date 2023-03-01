@@ -8,14 +8,13 @@ import com.revature.pokemondemo.repository.PokemonRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PokemonService implements BaseService<Pokemon>{
+public class PokemonService{
     private PokemonRepository pokeRepo;
 
     public PokemonService(PokemonRepository pokeRepo) {
         this.pokeRepo = pokeRepo;
     }
 
-    @Override
     public Pokemon getById(int Id) {
         //Optional class gives a possiblity of null or an object
         Optional<Pokemon> optionalPokemon = this.pokeRepo.findById(Id);
@@ -32,7 +31,6 @@ public class PokemonService implements BaseService<Pokemon>{
         }
     }
 
-    @Override
     public Pokemon addResource(Pokemon resource) {
         if (resource == null) 
             return new Pokemon("Pokemon added was null");

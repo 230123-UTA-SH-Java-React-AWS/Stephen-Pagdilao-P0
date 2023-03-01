@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -20,13 +22,14 @@ import lombok.Data;
 @Entity
 public @Data class Trainer implements Validator {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
 
     @Column(length = 100)
     private String name;
 
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "trainer", orphanRemoval = true) //In the event that this trainer does get removed, it will also remove the trainer's pokemons
+    @JsonManagedReference
     private List<Pokemon> pokemons = new ArrayList<>();
 
     public Trainer() { }

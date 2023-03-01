@@ -1,7 +1,6 @@
 package com.revature.pokemondemo.controller;
 
 import com.revature.pokemondemo.model.Pokemon;
-import com.revature.pokemondemo.service.BaseService;
 import com.revature.pokemondemo.service.PokemonService;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/pokemon")
 public class PokemonController {
-    @Qualifier("PokemonService")
-    private BaseService<Pokemon> pokeServ;
+    
+    private PokemonService pokeServ;
 
-    public PokemonController(BaseService<Pokemon> pokemonService) {
+    public PokemonController(PokemonService pokemonService) {
         this.pokeServ = pokemonService;
     }
 
