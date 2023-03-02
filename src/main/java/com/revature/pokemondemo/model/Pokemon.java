@@ -31,7 +31,7 @@ public @Data class Pokemon implements Validator {
     private int health;
 
     @ManyToOne()
-    @JsonBackReference
+    @JsonBackReference //Avoid Jackson repeated recursion
     private Trainer trainer;
 
     public Pokemon() { }

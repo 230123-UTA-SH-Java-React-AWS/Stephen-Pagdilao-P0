@@ -1,6 +1,6 @@
 package com.revature.pokemondemo.service;
 
-import java.util.Optional;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -21,14 +21,14 @@ public class TrainerService{
         this.pokeRepo = pokeRepo;
     }
 
-    public Trainer getById(int Id) {
-        Optional<Trainer> optionalTrainer = this.trainRepo.findById(Id);
+    public Trainer findTrainer(Trainer trainer) {
+        Optional<Trainer> optionalTrainer = this.trainRepo.findByUsernameAndPassword(trainer.getUsername(), trainer.getPassword());
 
-        if (optionalTrainer.isEmpty()) 
+        if (!optionalTrainer.isPresent()) 
         {
             //We try our best to avoid returning a null value since that is very error prone
             //Instead we return something meaningful that would tell the user what actually happened
-            return new Trainer("Trainer is not found");
+            return new Trainer("Trainer was not found");
         }
         else
         {
@@ -38,7 +38,7 @@ public class TrainerService{
 
     public Trainer addResource(Trainer resource) {
         if (resource == null) 
-            return new Trainer("Pokemon added was null");
+            return new Trainer("Trainer added was null");
 
         return this.trainRepo.save(resource);
     }
@@ -48,8 +48,8 @@ public class TrainerService{
     {
         Optional<Trainer> optionalTrainer = this.trainRepo.findById(userId);
 
-        if (optionalTrainer.isEmpty()) {
-            return new Trainer("Trainer is not found");
+        if (!optionalTrainer.isPresent()) {
+            return new Trainer("Trainer was not found");
         }
         else
         {

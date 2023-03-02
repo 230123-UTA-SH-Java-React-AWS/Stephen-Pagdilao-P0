@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -31,6 +32,10 @@ public @Data class Trainer implements Validator {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "trainer", orphanRemoval = true) //In the event that this trainer does get removed, it will also remove the trainer's pokemons
     @JsonManagedReference
     private List<Pokemon> pokemons = new ArrayList<>();
+
+    @Column(unique = true)
+    private String username;
+    private String password;
 
     public Trainer() { }
 

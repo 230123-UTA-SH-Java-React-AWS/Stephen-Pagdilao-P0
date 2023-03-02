@@ -19,11 +19,11 @@ public class PokemonService{
         //Optional class gives a possiblity of null or an object
         Optional<Pokemon> optionalPokemon = this.pokeRepo.findById(Id);
 
-        if (optionalPokemon.isEmpty()) 
+        if (!optionalPokemon.isPresent()) 
         {
             //We try our best to avoid returning a null value since that is very error prone
             //Instead we return something meaningful that would tell the user what actually happened
-            return new Pokemon("Pokemon is not found");
+            return new Pokemon("Pokemon was not found");
         }
         else
         {
