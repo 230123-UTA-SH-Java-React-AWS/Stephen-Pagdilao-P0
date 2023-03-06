@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Building and creating .jar file') {
             steps {
                 echo 'Building'
                 // Checking mvn version
@@ -11,8 +11,16 @@ pipeline {
                 // Compiling and generating the .jar file
                 sh 'mvn clean package'
 
+            }
+        }
+        stage('Creating docker image and running') {
+            steps {
+                // Gives docker permissions to run
+                sh "sudo chown root:jenkins /run/docker.sock"
+
                 // Cleans the image repository of docker
-                sh 'docker image prune -f'
+                sh 'sudo docker image prune -f'
+                
                 //Builds the image of our docker
                 sh 'docker build -t scifiler/api:latest .'
             }
