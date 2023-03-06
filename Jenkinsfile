@@ -8,6 +8,8 @@ pipeline {
                 // Checking mvn version
                 sh 'mvn -version'
 
+                echo '${url}'
+
                 // Compiling and generating the .jar file
                 sh 'mvn clean package'
 
