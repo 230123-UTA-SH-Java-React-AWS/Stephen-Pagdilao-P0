@@ -6,8 +6,13 @@ pipeline {
             steps {
                 echo 'Building'
                 sh 'mvn -version'
+                sh 'mvn clean package'
 
-                sh 'ls'
+                // Cleans the image repository of docker
+                sh 'sudo docker prune image -f'
+
+                //Builds the image of our docker
+                sh 'docker build -t scifiler/api:latest .'
             }
         }
     }
