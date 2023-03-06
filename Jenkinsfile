@@ -5,7 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
+                // Checking mvn version
                 sh 'mvn -version'
+
+                // Compiling and generating the .jar file
                 sh 'mvn clean package'
 
                 // Cleans the image repository of docker
