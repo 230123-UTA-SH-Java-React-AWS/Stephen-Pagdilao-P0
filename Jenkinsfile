@@ -6,6 +6,8 @@ pipeline {
             steps {
                 echo 'Building'
                 sh 'mvn -version'
+
+                sh 'ls'
             }
         }
     }
