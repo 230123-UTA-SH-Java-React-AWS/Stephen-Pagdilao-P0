@@ -15,12 +15,9 @@ pipeline {
         }
         stage('Creating docker image and running') {
             steps {
-                // Gives docker permissions to run
-                sh "sudo chown root:jenkins /run/docker.sock"
-
                 // Cleans the image repository of docker
                 sh 'sudo docker image prune -f'
-                
+
                 //Builds the image of our docker
                 sh 'docker build -t scifiler/api:latest .'
             }
