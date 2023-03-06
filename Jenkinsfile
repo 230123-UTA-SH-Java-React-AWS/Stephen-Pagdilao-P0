@@ -19,7 +19,14 @@ pipeline {
                 sh 'sudo docker image prune -f'
 
                 //Builds the image of our docker
-                sh 'docker build -t scifiler/api:latest .'
+                sh 'sudo docker build -t scifiler/api:latest .'
+            }
+        }
+
+        stage('Deploying into docker container') {
+            steps {
+                // Run image into container
+                sh 'sudo docker run -e url=$url -e secret=$secret -d -p 80:5050 -t scifiler/api:latest'
             }
         }
     }
