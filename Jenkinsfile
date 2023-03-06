@@ -25,7 +25,7 @@ pipeline {
         stage('Deploying into docker container') {
             steps {
                 //Stop all running containers
-                sh 'sudo docker rm $(docker ps -aq)'
+                sh 'sudo docker rm $(sudo docker ps -aq)'
 
                 // Run image into container
                 sh 'sudo docker run -e url=$url -e secret=$secret -d -p 80:5050 -t scifiler/api:latest'
