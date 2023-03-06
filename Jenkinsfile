@@ -12,7 +12,7 @@ pipeline {
                 sh 'mvn clean package'
 
                 // Cleans the image repository of docker
-                sh 'docker prune image -f'
+                sh 'docker image prune -f'
                 //Builds the image of our docker
                 sh 'docker build -t scifiler/api:latest .'
             }
