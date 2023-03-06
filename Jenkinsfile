@@ -10,7 +10,6 @@ pipeline {
 
                 // Compiling and generating the .jar file
                 sh 'mvn clean package'
-
             }
         }
         stage('Creating docker image and running') {
@@ -25,6 +24,9 @@ pipeline {
 
         stage('Deploying into docker container') {
             steps {
+                //Stop all running containers
+                sh 'sudo docker rm $(docker ps -aq)'
+
                 // Run image into container
                 sh 'sudo docker run -e url=$url -e secret=$secret -d -p 80:5050 -t scifiler/api:latest'
             }
