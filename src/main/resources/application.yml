@@ -1,0 +1,23 @@
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    password: ${pass}
+    url: ${url}
+    username: ${user}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  session:
+    storeType: jdbc
+server:
+  port: 5050
+springdoc:
+  swagger-ui:
+    path: /swagger
+jwt:
+  secret: ${secret}
