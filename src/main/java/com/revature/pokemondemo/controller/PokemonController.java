@@ -22,4 +22,10 @@ public class PokemonController {
     {
         return this.pokeServ.getById(id);
     }
+
+    @RequestMapping(path = "/someNew", method = RequestMethod.GET)
+    public String giveHello()
+    {
+        return "Hello World";
+    }
 }
