@@ -5,7 +5,7 @@ pipeline {
 
         stage('Building and create .jar file'){
             steps {
-                echo 'Building the jar file'
+                echo 'Building the jar file some change'
 
                 sh 'mvn -version'
             }
