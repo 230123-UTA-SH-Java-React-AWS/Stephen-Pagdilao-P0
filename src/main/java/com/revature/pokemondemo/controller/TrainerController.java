@@ -9,6 +9,7 @@ import com.revature.pokemondemo.service.TrainerService;
 import com.revature.pokemondemo.util.JwtTokenUtil;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,20 +43,28 @@ public class TrainerController {
             return failed;
         }
 
+        response.setStatus(201);
         return this.trainServ.addResource(trainer);
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/{id}/addPokemon")
     public Trainer addPokemonToTrainer(@PathVariable("id")int userId, 
-                    @RequestBody Pokemon pokemon, 
-                    // @CookieValue("jwt") String jwtCookie, 
+                    @RequestBody Pokemon pokemon,
                     HttpServletResponse response)
     {
-        // if (jwtCookie.equals("")) 
-        //     response.setStatus(404);
+        if (pokemon.getName() == null) 
+        {
+            response.setStatus(400);
+            Trainer failed = new Trainer();
+            failed.setName("Pokemon has missing required parameter(s)");
+            return failed;
+        }
 
-        // return jwtCookie;
+        Trainer foundTrainer = this.trainServ.addPokemon(userId, pokemon);
 
-        return this.trainServ.addPokemon(userId, pokemon);
+        if (foundTrainer.getName().equals("Trainer was not found")) 
+            response.setStatus(404);
+        
+        return foundTrainer;
     }
 }
