@@ -29,7 +29,7 @@ pipeline {
             steps {
 
                 //Stop all running containers
-                sh 'sudo docker rm $(sudo docker ps -aq)'
+                sh 'sudo docker rm -f $(sudo docker ps -aq)'
 
                 //Run latest version of image into my container
                 sh 'sudo docker run -e url=$url -e secret=$secret -d -p 80:5050 -t scifiler/api:latest'
