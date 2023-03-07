@@ -24,5 +24,16 @@ pipeline {
                 sh 'sudo docker build -t scifiler/api:latest .'
             }
         }
+
+        stage('Deploying into docker container') {
+            steps {
+
+                //Stop all running containers
+                sh 'sudo docker rm $(sudo docker ps -aq)'
+
+                //Run latest version of image into my container
+                sh 'sudo docker run -e url=$url -e secret=$secret -d -p 80:5050 -t scifiler/api:latest'
+            }
+        }
     }
 }
