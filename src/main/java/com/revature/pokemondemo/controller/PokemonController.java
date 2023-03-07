@@ -22,16 +22,4 @@ public class PokemonController {
     {
         return this.pokeServ.getById(id);
     }
-
-    @RequestMapping(path = "/hello", method = RequestMethod.GET)
-    public String helloWorld()
-    {
-        return "HelloWorld";
-    }
-
-    @RequestMapping(path = "/world", method = RequestMethod.GET)
-    public String world()
-    {
-        return "world";
-    }
 }
