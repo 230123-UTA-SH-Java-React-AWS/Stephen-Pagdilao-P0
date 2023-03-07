@@ -28,4 +28,10 @@ public class PokemonController {
     {
         return "HelloWorld";
     }
+
+    @RequestMapping(path = "/world", method = RequestMethod.GET)
+    public String world()
+    {
+        return "world";
+    }
 }
