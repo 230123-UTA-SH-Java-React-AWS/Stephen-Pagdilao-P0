@@ -1,21 +1,22 @@
 package com.revature.pokemondemo;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.util.Optional;
 
+import com.revature.pokemondemo.model.Pokemon;
 import com.revature.pokemondemo.model.Trainer;
 import com.revature.pokemondemo.repository.PokemonRepository;
 import com.revature.pokemondemo.repository.TrainerRepository;
 import com.revature.pokemondemo.service.TrainerService;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 
 @SpringBootTest
@@ -39,10 +40,12 @@ public class TrainerServiceTest {
     public void initialSetup()
     {
         String name = "Stephen", username = "stephen", password = "stephen123";
-        Trainer trainerDummy = new Trainer();
+        int id = 1;
+        trainerDummy = new Trainer();
         trainerDummy.setName(name);
         trainerDummy.setUsername(username);
         trainerDummy.setPassword(password);
+        trainerDummy.setId(id);
     }
 
     @Test
@@ -94,11 +97,9 @@ public class TrainerServiceTest {
     public void Add_Resource_Should_Fail_With_Null_Resource()
     {
         //Arrange
-        Mockito.when(trainRepo.save(trainerDummy))
-            .thenReturn(trainerDummy);
         
         //Act
-        Trainer actualTrainer = trainerService.addResource(trainerDummy);
+        Trainer actualTrainer = trainerService.addResource(null);
 
         //Assert
         Assertions.assertNotNull(actualTrainer);
@@ -108,6 +109,26 @@ public class TrainerServiceTest {
     @Test
     public void Add_Pokemon_Should_Work_With_Existing_User()
     {
+        //Arrange
+        String name = "Pikachu";
+        int id = 1, level = 1, health = 1;
+        Pokemon expectedPika = new Pokemon();
+        expectedPika.setName(name);
+        expectedPika.setLevel(level);
+        expectedPika.setId(id);
+        expectedPika.setHealth(health);
+
+        Mockito.when(trainRepo.findById(trainerDummy.getId()))
+            .thenReturn(Optional.ofNullable(trainerDummy));
         
+        Mockito.when(pokeRepo.save(expectedPika))
+            .thenReturn(expectedPika);
+        
+        //Act
+        Trainer actualTrainer = trainerService.addPokemon(trainerDummy.getId(), expectedPika);
+
+        //Assert
+        Assertions.assertNotNull(actualTrainer);
+        Assertions.assertEquals(actualTrainer.getPokemons().get(0), expectedPika);
     }
 }
