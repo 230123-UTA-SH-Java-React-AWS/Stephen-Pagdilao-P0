@@ -30,8 +30,15 @@ public class TrainerController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Trainer addTrainer(@RequestBody Trainer trainer)
+    public Trainer addTrainer(@RequestBody Trainer trainer, HttpServletResponse response)
     {
+        if (trainer.getName() == null) 
+            response.setStatus(400);
+        if (trainer.getUsername() == null) 
+            response.setStatus(400);
+        if (trainer.getPassword() == null) 
+            response.setStatus(400);
+
         return this.trainServ.addResource(trainer);
     }
 
