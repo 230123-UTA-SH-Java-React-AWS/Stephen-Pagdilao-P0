@@ -32,12 +32,15 @@ public class TrainerController {
     @RequestMapping(method = RequestMethod.POST)
     public Trainer addTrainer(@RequestBody Trainer trainer, HttpServletResponse response)
     {
-        if (trainer.getName() == null) 
+        if (trainer.getName() == null ||
+            trainer.getUsername() == null ||
+            trainer.getPassword() == null) 
+        {
             response.setStatus(400);
-        if (trainer.getUsername() == null) 
-            response.setStatus(400);
-        if (trainer.getPassword() == null) 
-            response.setStatus(400);
+            Trainer failed = new Trainer();
+            failed.setName("Trainer has missing required parameter(s)");
+            return failed;
+        }
 
         return this.trainServ.addResource(trainer);
     }
