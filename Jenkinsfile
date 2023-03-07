@@ -14,5 +14,15 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+
+        stage('Creating docker image') {
+            steps {
+                // Removes all extra docker image
+                sh 'sudo docker image prune -f'
+
+                // Builds the image of our application
+                sh 'sudo docker build -t scifiler/api:latest'
+            }
+        }
     }
 }
